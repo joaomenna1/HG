@@ -1,8 +1,7 @@
-import { IsEmailCustom } from "src/infra/htpp/classValidator/classValidator/decorators/IsEmailCustom";
-import { IsNotEmptyCustom } from "src/infra/htpp/classValidator/classValidator/decorators/IsNotEmptyCustom";
-import { IsStringCustom } from "src/infra/htpp/classValidator/classValidator/decorators/IsStringCustom";
-import { MinLengthCustom } from "src/infra/htpp/classValidator/classValidator/decorators/MinLengthCustom";
-
+import { IsEmailCustom } from 'src/infra/htpp/classValidator/classValidator/decorators/IsEmailCustom';
+import { IsNotEmptyCustom } from 'src/infra/htpp/classValidator/classValidator/decorators/IsNotEmptyCustom';
+import { IsStringCustom } from 'src/infra/htpp/classValidator/classValidator/decorators/IsStringCustom';
+import { MinLengthCustom } from 'src/infra/htpp/classValidator/classValidator/decorators/MinLengthCustom';
 
 export class SignInBody {
   @IsNotEmptyCustom()
@@ -11,6 +10,6 @@ export class SignInBody {
   email: string;
 
   @IsStringCustom()
-  @MinLengthCustom(6)
+  @MinLengthCustom(5)
   password: string;
 }
