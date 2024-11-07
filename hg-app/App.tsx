@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StatusBar, Animated, Text, Image, View, Dimensions, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
