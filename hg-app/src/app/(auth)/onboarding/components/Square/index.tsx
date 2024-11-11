@@ -26,7 +26,7 @@ interface SquareProps {
     return (
       <AnimatedSquare
         style={{
-          transform: [{ rotate }],
+          transform: [{ rotate }, {translateX}],
         }}
       />
     );

@@ -6,7 +6,7 @@ interface DataType {
     animation?: any;
 }
 
-const animation1 = require('../../../../../assets/onboarding/analysis-data.json');
+const animation1 = require('../../../../../assets/onboarding/analysis.json');
 const animation2 = require('../../../../../assets/onboarding/heartbeat.json');
 const animation3 = require('../../../../../assets/onboarding/report.json');
 
@@ -15,19 +15,19 @@ const DataTextOnboarding = (): DataType[] => {
   return [
     {
       key: '3571572',
-      title: 'Análise de Dados Vitai',
+      title: 'Análise de Dados Vital',
       description: "Monitore o estado do coração com precisão e segurança, sempre atualizado.",
-      image: animation1,
+      animation: animation1,
     },
     {
       key: '3571747',
-      title: 'Prevenção de Doenças Cardíacas',
+      title: 'Prevenção',
       description: 'Utilize tecnologia para prevenir problemas cardíacos e melhorar a qualidade de vida.',
       animation: animation2,
     },
     {
       key: '3571680',
-      title: 'Relatórios para Diagnósticos precisos',
+      title: 'Diagnósticos precisos',
       description: 'Obtenha insights detalhados para diagnósticos rápidos e precisos.',
       animation: animation3,
     },

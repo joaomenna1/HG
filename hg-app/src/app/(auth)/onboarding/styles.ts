@@ -34,7 +34,6 @@ export const Title = styled(Typography).attrs(() => ({
 }))`
   padding-top: 15px;
   text-align: center;
-  color: "white"
 `;
 export const Description = styled(Typography).attrs(() => ({
   fontSize: "body_lg",
