@@ -14,19 +14,19 @@ const DataTextOnboarding = (): DataType[] => {
   
   return [
     {
-      key: '3571572',
-      title: 'Análise de Dados Vital',
+      key: '21421',
+      title: 'Análise de Dados Vitais',
       description: "Monitore o estado do coração com precisão e segurança, sempre atualizado.",
       animation: animation1,
     },
     {
-      key: '3571747',
+      key: '42151',
       title: 'Prevenção',
       description: 'Utilize tecnologia para prevenir problemas cardíacos e melhorar a qualidade de vida.',
       animation: animation2,
     },
     {
-      key: '3571680',
+      key: '515213',
       title: 'Diagnósticos precisos',
       description: 'Obtenha insights detalhados para diagnósticos rápidos e precisos.',
       animation: animation3,

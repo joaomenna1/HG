@@ -1,10 +1,8 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { useAuthStore } from "../../../store/authStore";
+import { StatusBar } from "expo-status-bar";
+
 
 export default function Signin() {
-  return (
-    <View>
-      <Text>Sign In Page</Text>
-    </View>
-  );
+  return (<></>);
 }
