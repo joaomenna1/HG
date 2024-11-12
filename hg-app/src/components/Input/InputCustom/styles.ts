@@ -45,9 +45,10 @@ export const IconButton = styled.TouchableOpacity``;
 type IIconprops = {
   showPassword: boolean;
   error: boolean;
+  name?:string;
 };
-export const Icon = styled(Ionicons).attrs<IIconprops>(({ theme, showPassword, error }) => ({
-  name: showPassword ? ('eye-outline' as const) : ('eye-off-outline' as const),
+export const Icon = styled(Ionicons).attrs<IIconprops>(({ theme,name, showPassword, error }) => ({
+  name: name || (showPassword ? 'eye-outline' : 'eye-off-outline'), 
   color: error ? theme.colors.brand.red : theme.colors.base.gray_4,
   size: 24,
 }))<IIconprops>``;

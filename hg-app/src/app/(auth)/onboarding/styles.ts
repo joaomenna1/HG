@@ -7,7 +7,7 @@ const { width } = Dimensions.get('screen');
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.brand.primary};
+  background-color: "#000066";
   align-items: center;
   justify-content: center;
 `;

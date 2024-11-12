@@ -18,14 +18,12 @@ interface AuthState {
   logout: () => void;
   loadStoredAuth: () => Promise<void>;
 }
-
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
   loading: false,
   error: null,
   isAuthenticated: false,
-
 
   login: async (email, password) => {
     set({ loading: true, error: null });
@@ -35,29 +33,26 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (response.status === 200) {
         const { id, name, email, token } = response.data;
 
-    
         set({
           user: { id, name, email },
           token,
           isAuthenticated: true,
         });
 
-  
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         await AsyncStorage.setItem('authToken', token);
-        await AsyncStorage.setItem(
-          'user',
-          JSON.stringify({ id, name, email })
-        );
+        await AsyncStorage.setItem('user', JSON.stringify({ id, name, email }));
       }
     } catch (error: any) {
-      set({ error: error.response?.data?.message || 'Erro ao autenticar usuário' });
+      const errorMessage = error.response?.data?.message || 'Erro ao autenticar usuário';
+      set({ error: errorMessage });
+      
+      throw new Error(errorMessage);
     } finally {
       set({ loading: false });
     }
   },
-
 
   logout: async () => {
     set({ user: null, token: null, isAuthenticated: false });

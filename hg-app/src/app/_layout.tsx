@@ -11,7 +11,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      router.replace('/(auth)/onboarding');
+      router.replace('/(auth)/onboarding/');
     }
   }, [loading, isAuthenticated]);
 

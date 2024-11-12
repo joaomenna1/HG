@@ -109,7 +109,7 @@ export const Content = styled.View<ButtonStyle>`
 `;
 
 export const Title = styled(Typography).attrs<ButtonStyle>(({ theme }) => ({
-  fontFamily: theme.font_family.inter_semiBold,
+  fontFamily: "inter_semiBold",
   fontSize: theme.font_size.title.lg,
 }))<ButtonStyle>`
   color: ${({ theme, variant }) => {

@@ -1,6 +1,7 @@
+import React from "react";
 import { TextProps } from "react-native";
 import { Container } from "./styled";
-import * as T from "./../../theme/type";
+import * as T from "../../theme/type";
 
 export type TypographyStyle = {
   textAlign?: T.TextAlign;
@@ -13,10 +14,28 @@ export type TypographyStyle = {
 
 export type TypographyProps = TextProps & TypographyStyle;
 
-const Typography = ({ ...props }: TypographyProps) => {
+const Typography: React.FC<TypographyProps> = ({
+  children,
+  textAlign,
+  fontFamily,
+  lineHeight,
+  fontSize,
+  letterSpacings,
+  color,
+  ...rest
+}) => {
   return (
-    <Container {...props} allowFontScaling={false}>
-      {props.children}
+    <Container
+      textAlign={textAlign}
+      fontFamily={fontFamily}
+      lineHeight={lineHeight}
+      fontSize={fontSize}
+      letterSpacings={letterSpacings}
+      color={color}
+      {...rest}
+      allowFontScaling={false}
+    >
+      {children}
     </Container>
   );
 };

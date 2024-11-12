@@ -12,7 +12,6 @@ function selectColor(name: string | undefined) {
     if (name === "gray_5") return colors.base.gray_5;
     if (name === "gray_6") return colors.base.gray_6;
     if (name === "gray_7") return colors.base.gray_7;
-
     if (name === "red") return colors.brand.red;
     if (name === "blue") return colors.brand.blue;
     if (name === "green") return colors.brand.green;
