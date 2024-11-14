@@ -130,7 +130,7 @@ export default function Signup() {
             <HStack>
               <FooterText>{"Voce ja tem a conta?"}</FooterText>
 
-              <SignupButton onPress={() => router.push("(auth)/sign-in")}>
+              <SignupButton onPress={() => router.push("/(auth)/sign-in")}>
                 <SignupButtonText>{"Login"}</SignupButtonText>
               </SignupButton>
             </HStack>

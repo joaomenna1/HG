@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import { create } from "zustand";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import Api from "../api/api";
 
 interface User {
   id: string;
@@ -10,17 +11,15 @@ interface User {
 
 interface AuthState {
   user: User | null;
-  token: string | null;
+  access_token: string | null;
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-  loadStoredAuth: () => Promise<void>;
 }
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  token: null,
+  access_token: null,
   loading: false,
   error: null,
   isAuthenticated: false,
@@ -28,61 +27,32 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (email, password) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.post('/user/login', { email, password });
-
+      const response = await Api.post("/sign-in", { email, password });
+      
       if (response.status === 200) {
-        const { id, name, email, token } = response.data;
-
-        set({
-          user: { id, name, email },
-          token,
-          isAuthenticated: true,
-        });
-
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-        await AsyncStorage.setItem('authToken', token);
-        await AsyncStorage.setItem('user', JSON.stringify({ id, name, email }));
+        const { access_token } = response.data;
+  
+        if (access_token) {
+          set({
+            access_token,
+            isAuthenticated: true,
+          });
+  
+          Api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+  
+          await AsyncStorage.setItem("authToken", access_token);
+        }
       }
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || 'Erro ao autenticar usuário';
-      set({ error: errorMessage });
-      
-      throw new Error(errorMessage);
-    } finally {
-      set({ loading: false });
-    }
-  },
-
-  logout: async () => {
-    set({ user: null, token: null, isAuthenticated: false });
-    delete axios.defaults.headers.common['Authorization'];
-
-    await AsyncStorage.removeItem('authToken');
-    await AsyncStorage.removeItem('user');
-  },
-
-  loadStoredAuth: async () => {
-    set({ loading: true });
-    try {
-      const storedToken = await AsyncStorage.getItem('authToken');
-      const storedUser = await AsyncStorage.getItem('user');
-
-      if (storedToken && storedUser) {
-        const user = JSON.parse(storedUser);
-
-        set({
-          user,
-          token: storedToken,
-          isAuthenticated: true,
-        });
-
-        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+      console.log("Erro ao autenticar:", error);
+  
+      if (axios.isAxiosError(error) && error.response) {
+        set({ error: error.response.data?.message || "Erro na autenticação" });
+      } else {
+        set({ error: "Erro desconhecido ao fazer login" });
       }
-    } catch (error) {
-      console.error('Erro ao carregar dados armazenados:', error);
     } finally {
       set({ loading: false });
     }
-  },
+  }
 }));

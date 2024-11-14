@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InputCustom } from "../../../components/Input";
@@ -30,8 +30,9 @@ import {
 } from "./styles";
 
 export default function Signin() {
-  const { login, loading, isAuthenticated } = useAuthStore();
   const router = useRouter();
+  const { login, loading, error, isAuthenticated } = useAuthStore();
+
   const {
     control,
     handleSubmit,
@@ -39,27 +40,24 @@ export default function Signin() {
   } = useForm<ISignInReq>({
     resolver: yupResolver(schemaSignIn),
   });
+
   const handleLogin = async (data: ISignInReq) => {
-    try {
-      await login(data.email, data.password);
-      if (isAuthenticated) {
-        router.push("(app)/Home");
-      }
-    } catch (error: any) {
-      Alert.alert("Erro", error.message || "Erro ao fazer login");
+    await login(data.email, data.password);
+    if (isAuthenticated) {
+      console.log("autenticado")
+      router.push("/(app)/Home");
+    } else if (error) {
+      Alert.alert("Erro", error);
     }
   };
+
 
   return (
     <Container>
       <StatusBar style="dark" />
       <HeaderBack onPress={() => router.back()} />
 
-      <CloseKeyboard
-        onPress={() => {
-          Keyboard.dismiss();
-        }}
-      >
+      <CloseKeyboard onPress={() => Keyboard.dismiss()}>
         <Content>
           <ContentInne>
             <AreaText>
@@ -88,7 +86,7 @@ export default function Signin() {
                 name="password"
                 render={({ field: { onChange, value } }) => (
                   <InputCustom
-                    placeholder={"senha"}
+                    placeholder={"Senha"}
                     value={value}
                     secureTextEntry
                     onChangeText={onChange}
@@ -102,30 +100,29 @@ export default function Signin() {
                 onPress={() => router.push("/(auth)/password-recovery")}
               >
                 <RecoverPasswordButtonText>
-                  {"Esqueceu sua senha"}
+                  Esqueceu sua senha?
                 </RecoverPasswordButtonText>
               </RecoverPasswordButton>
 
               <Button
-                title={"Login"}
+                title="Login"
                 onPress={handleSubmit(handleLogin)}
                 isLoading={loading}
               />
+
+              <HStack style={{ marginVertical: 15 }}>
+                <Line />
+                <IfNot>Ou</IfNot>
+                <Line />
+              </HStack>
+
+              <HStack>
+                <FooterText>Você não tem conta? </FooterText>
+                <SigninButton onPress={() => router.push("/(auth)/sign-up")}>
+                  <SigninButtonText>Cadastrar</SigninButtonText>
+                </SigninButton>
+              </HStack>
             </Form>
-
-            <HStack style={{ marginVertical: 15 }}>
-              <Line />
-              <IfNot>{"Or"}</IfNot>
-              <Line />
-            </HStack>
-
-            <HStack>
-              <FooterText>{"Voce não tem conta? "}</FooterText>
-
-              <SigninButton onPress={() => router.push("/(auth)/sign-up")}>
-                <SigninButtonText>{"Cadastrar"}</SigninButtonText>
-              </SigninButton>
-            </HStack>
           </ContentInne>
         </Content>
       </CloseKeyboard>
