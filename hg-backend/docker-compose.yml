@@ -7,11 +7,16 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: mydb
+      POSTGRES_DB: db-hg
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hg-network
+
+networks:
+  hg-network:
 
 volumes:
   postgres_data:

@@ -14,8 +14,8 @@ import { JwtStrategy } from 'src/modules/auth/strategies/jwt.strategy';
     DatabaseModule,
     UserModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRE },
+      secret: process.env.JWT_SECRET || 'defaultSecret',
+      signOptions: { expiresIn: process.env.JWT_EXPIRE || '1h' },
     }),
   ],
   controllers: [AuthController],

@@ -16,7 +16,7 @@ import { Public } from './decorators/isPublic';
 export class AuthController {
   constructor(private signInUseCase: SignInUseCase) {}
 
-  @Post('signIn')
+  @Post('sign-in')
   @Public()
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
