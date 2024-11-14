@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, Platform } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
@@ -24,10 +24,12 @@ import {
   SignupButton,
   SignupButtonText,
 } from "./styles";
+import { useUserStore } from "../../../store/userStore";
 
 export default function Signup() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const { loading, error, success, createUser } = useUserStore();
+  
 
   const {
     control,
@@ -37,7 +39,15 @@ export default function Signup() {
     resolver: yupResolver(schemaUserReq),
   });
 
-  const handleCreateUser = async (data: IUserReq) => {};
+  const handleCreateUser = async (data: IUserReq) => {
+    await createUser(data);
+    if (success) {
+      Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+      router.push("(auth)/sign-in");
+    } else if (error) {
+      Alert.alert("Erro", error);
+    }
+  };
 
   return (
     <Container>
